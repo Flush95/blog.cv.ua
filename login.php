@@ -1,5 +1,5 @@
 <?php
-    include "includes/db.php";
+    include "db.php";
 
     $login_data = $_POST;
 
@@ -11,18 +11,18 @@
 
         $user = R::findOne('users', "login = ?", array($login));
         if ($user) {
-            if (password_verify($password, $user->password)) {
-                $_SESSION['logged_user'] = $user;
-                header("Location:/");
-            } else {
-                $errors[] = "Пользователь с таким паролем не найден";
+            if (!password_verify($password, $user->password)) {
+               $errors[] = "Пользователь с таким паролем не найден";
             }
-
-        }
-        else {
+        } else {
             $errors[] = "Пользователь с таким логином не найден";
         }
 
+
+        if (empty($errors)) {
+            $_SESSION['logged_user'] = $user;
+                header("Location:/");
+        }
 
     }
 ?>
@@ -68,7 +68,7 @@
     <form action="login.php" method="POST">
         <h2 class="text-center">Вход</h2>
         <div class="form-group">
-            <input type="text" name="login" class="form-control" placeholder="Логин" required="required">
+            <input type="text" name="login" value="<?php echo @$login; ?>" class="form-control" placeholder="Логин" required="required">
         </div>
         <div class="form-group">
             <input type="password" name="password" class="form-control" placeholder="Пароль" required="required">
@@ -76,6 +76,14 @@
         <div class="form-group">
             <button type="submit" name="do_login" class="btn btn-primary btn-block">Войти</button>
         </div>
+        <p class="text-center">
+            <?php
+                if (!empty($errors)) {
+                    include "views/toasts.php";
+                    errorToast($errors);
+                }
+            ?>
+        </p>
     </form>
     <p class="text-center"><a href="/registration.php">Создание Аккаунта</a></p>
     <p class="text-center"><a href="/">На главную</a></p>

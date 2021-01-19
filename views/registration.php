@@ -1,5 +1,6 @@
 <?php
-    include "includes/db.php";
+
+    include "W:/domains/blog.cv.ua/db.php";
 
     $data = $_POST;
 
@@ -78,7 +79,7 @@
 </head>
 <body>
 <div class="login-form">
-    <form action="/registration.php" method="POST">
+    <form action="registration.php" method="POST">
         <h2 class="text-center">Регистрация</h2>
         <div class="form-group">
             <input type="text" value="<?php echo @$login; ?>" name="login" class="form-control" placeholder="Логин" required="required">
