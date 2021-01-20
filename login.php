@@ -23,7 +23,6 @@
             $_SESSION['logged_user'] = $user;
                 header("Location:/");
         }
-
     }
 ?>
 
@@ -64,6 +63,7 @@
 </style>
 </head>
 <body>
+
 <div class="login-form">
     <form action="login.php" method="POST">
         <h2 class="text-center">Вход</h2>
@@ -79,7 +79,7 @@
         <p class="text-center">
             <?php
                 if (!empty($errors)) {
-                    include "views/toasts.php";
+                    include "views/alerts.php";
                     errorToast($errors);
                 }
             ?>

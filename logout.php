@@ -1,8 +1,10 @@
 <?php
-	include "includes/db.php";
+	include "db.php";
 
-	unset($_SESSION['logged_user']);
-	header("Location:/");
-
+	if (isset($_SESSION['logged_user'])) {
+		unset($_SESSION['logged_user']);
+		session_destroy();
+		header("Location:/");
+	}
 
 ?>

@@ -34,7 +34,7 @@
             R::store($user);
             header("Location:/login.php");
         } else {
-            echo array_shift($errors);
+            //echo array_shift($errors);
         }
     }
 
@@ -96,7 +96,15 @@
         <div class="form-group">
             <button type="submit" name="sign_up" class="btn btn-primary btn-block">Зарегистрироваться</button>
         </div>
-        <p class="text-center" id="errorId"></p>
+        <p class="text-center" id="errorId">
+            <?php
+                if (!empty($errors)) {
+                    include "alerts.php";
+                    errorToast($errors);
+                }
+            ?>
+
+        </p>
     </form>
     <p class="text-center"><a href="/login.php">Войти</a></p>
     <p class="text-center"><a href="/">На главную</a></p>
