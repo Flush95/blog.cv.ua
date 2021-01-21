@@ -1,7 +1,6 @@
 
-	<label for="name_text">Оставить комментарий</label>
-	<form action="/handlers/comment_handler.php" method="POST">
-		<input type="text" name="comment_text">
+	<form class="form-inline" action="/handlers/comment_handler.php" method="POST">
+		<input class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" type="text" name="comment_text" placeholder="Оставить комментарий">
 		<input type ="text" name="id" value ="<?php echo $full_art->id;  ?>" hidden />
-		<input type="submit" name="submit_comment">
+		<input class="form-control mb-2 mr-sm-2" type="submit" name="submit_comment">
 	</form>

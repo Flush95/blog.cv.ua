@@ -10,6 +10,6 @@
 		$article->ownCommentsList[] = $comment;
 		R::store($article);
 
-		header("Location:/");
+		header("Location:/views/articles.php");
 	}
 ?>

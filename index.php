@@ -1,9 +1,6 @@
 <?php
     require "db.php";
 
-
-
-
     /*$comment = R::dispense("comments");
     $comment->pub_date = date("Y-m-d H:i:s");
     $comment->comment_text = "you";
@@ -23,14 +20,9 @@
     $articles->ownItemList[] = $comment;
     $articles->ownItemList[] = $comment1;
 
-
     R::store($articles);*/
 
-
-
     /*$articles = R::load("articles", 1);
-
-
 
     echo "Title: $articles->title";
 
@@ -38,7 +30,13 @@
         echo "<p>comment $comment->comment_text </p>";
     }*/
 
+    /* Categories table create with relation
+    $articles = R::load("articles", 1);
 
+    $category = R::dispense("categories");
+    $category->name = "Культура";
+    $category->ownAriclesList[] = $articles;
+    R::store($category);*/
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -92,14 +90,17 @@
                             <div class="col-md-6 col-lg-4 mb-5">
                                 <div class="portfolio-item mx-auto" data-toggle="modal"
                                 data-target="#portfolioModal<?php echo $count; ?>">
-                                <p><?php echo  $art->title; ?></p>
+                                <p class="font-weight-bold"><?php echo substr($art->title, 0, 65); ?>..</p>
                                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                                     </div>
-                                    <img class="img-fluid" src="<?php echo $art->image; ?>" alt=""/>
+                                    <img class="imgCards" src="<?php echo $art->image; ?>" alt=""/>
+
                                     <div class="row">
-                                        <div class="col-md-6"><?php echo $art->author; ?></div>
-                                        <div class="col-md-6"><?php echo $art->pub_time; ?></div>
+                                        <div class="col-md-6"><p class="font-weight-light text-left"><span class="badge badge-info"><?php echo $art->author; ?></span></p></div>
+                                        <div class="col-md-6"><p class="font-weight-light text-right">
+                                            <span class="badge badge-secondary"><?php echo date("Y-m-d", strtotime($art->pub_time)); ?></span>
+                                        </p></div>
                                     </div>
                                 </div>
                             </div>
@@ -112,99 +113,31 @@
 
 
                 </div>
-                <button onclick="location.href = '/views/articles.php'"; class="btn btn-primary">Все статьи</button>
+                <button onclick="location.href = '/views/articles.php'"; class="btn btn-outline-primary btn-lg btn-block">Все статьи</button>
             </div>
 
         </section>
 
-        <!-- Contact Section-->
-        <section class="page-section" id="contact">
-            <div class="container">
-                <!-- Contact Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contact Me</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- Contact Section Form-->
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-                        <form id="contactForm" name="sentMessage" novalidate="novalidate">
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Name</label>
-                                    <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Email Address</label>
-                                    <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Phone Number</label>
-                                    <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Message</label>
-                                    <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Please enter a message."></textarea>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <br />
-                            <div id="success"></div>
-                            <div class="form-group"><button class="btn btn-primary btn-xl" id="sendMessageButton" type="submit">Send</button></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
         <!-- Footer-->
         <footer class="footer text-center">
             <div class="container">
                 <div class="row">
-                    <!-- Footer Location-->
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="text-uppercase mb-4">Location</h4>
-                        <p class="lead mb-0">
-                            2215 John Daniel Drive
-                            <br />
-                            Clark, MO 65243
-                        </p>
-                    </div>
+
                     <!-- Footer Social Icons-->
-                    <div class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="col-lg-12 mb-12 mb-lg-12">
                         <h4 class="text-uppercase mb-4">Around the Web</h4>
-                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
-                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/profile.php?id=100011139099245"><i class="fab fa-fw fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/Flush95"><i class="fab fa-fw fa-github"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/emilianburla/"><i class="fab fa-fw fa-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://web.telegram.org/#/im?p=@flush95"><i class="fab fa-fw fa-telegram"></i></a>
                     </div>
-                    <!-- Footer About Text-->
-                    <div class="col-lg-4">
-                        <h4 class="text-uppercase mb-4">About Freelancer</h4>
-                        <p class="lead mb-0">
-                            Freelance is a free to use, MIT licensed Bootstrap theme created by
-                            <a href="http://startbootstrap.com">Start Bootstrap</a>
-                            .
-                        </p>
-                    </div>
+
                 </div>
             </div>
         </footer>
         <!-- Copyright Section-->
         <div class="copyright py-4 text-center text-white">
-            <div class="container"><small>Copyright © Your Website 2020</small></div>
+            <div class="container"><small>Copyright © Your Website 2021</small></div>
         </div>
         <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
         <div class="scroll-to-top d-lg-none position-fixed">
@@ -237,10 +170,10 @@
                                     <!-- Portfolio Modal - Image-->
                                     <img class="img-fluid rounded mb-5" src="<?php echo $full_art->image; ?>" alt="" />
                                     <!-- Portfolio Modal - Text-->
-                                    <p class="mb-5"><?php echo $full_art->text; ?></p>
+                                    <p class="mb-5 font-weight-light text-justify"><?php echo $full_art->text; ?></p>
                                     <div class="row">
-                                        <div class="col-md-6"><p>Автор: <?php echo $full_art->author ?></p></div>
-                                        <div class="col-md-6"><p>Дата: <?php echo $full_art->pub_time; ?> </p></div>
+                                        <div class="col-md-6"><p class="text-left"><span class="badge badge-success"> <?php echo $full_art->author ?></span></p></div>
+                                        <div class="col-md-6"><p class="text-right"><span class="badge badge-light"><?php echo $full_art->pub_time; ?></span></p></div>
                                     </div>
                                     <?php
                                         /*var_dump($_SESSION['logged_user']);*/
@@ -248,11 +181,7 @@
                                             include "views/comment_form.php";
                                         }
                                     ?>
-                                    <br>
-                                    <button class="btn btn-primary" data-dismiss="modal">
-                                        <i class="fas fa-times fa-fw"></i>
-                                        Close Window
-                                    </button>
+
                                 </div>
                             </div>
                         </div>

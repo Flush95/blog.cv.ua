@@ -1,23 +1,27 @@
 <?php
     include "db.php";
+    require("botdetect.php");
 
     $login_data = $_POST;
 
     if (isset($login_data["do_login"])) {
+        $ExampleCaptcha = new Captcha("ExampleCaptcha");
+        $isHuman = $ExampleCaptcha->Validate();
+
+        $errors = array();
+
+        if (!$isHuman)
+            $errors[] = "Captcha validation failed";
 
         $login = $login_data['login'];
         $password = $login_data['password'];
-        $errors = array();
 
         $user = R::findOne('users', "login = ?", array($login));
         if ($user) {
-            if (!password_verify($password, $user->password)) {
+            if (!password_verify($password, $user->password))
                $errors[] = "Пользователь с таким паролем не найден";
-            }
-        } else {
+        } else
             $errors[] = "Пользователь с таким логином не найден";
-        }
-
 
         if (empty($errors)) {
             $_SESSION['logged_user'] = $user;
@@ -32,6 +36,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Login</title>
+<link type="text/css" rel="Stylesheet"
+    href="<?php echo CaptchaUrls::LayoutStylesheetUrl() ?>" />
+</head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -73,6 +80,17 @@
         <div class="form-group">
             <input type="password" name="password" class="form-control" placeholder="Пароль" required="required">
         </div>
+
+        <?php
+          $ExampleCaptcha = new Captcha("ExampleCaptcha");
+          $ExampleCaptcha->UserInputID = "CaptchaCode";
+          echo $ExampleCaptcha->Html();
+        ?>
+        <div class="form-group">
+            <input class="form-control" name="CaptchaCode" id="CaptchaCode" type="text" required="required"/>
+        </div>
+
+
         <div class="form-group">
             <button type="submit" name="do_login" class="btn btn-primary btn-block">Войти</button>
         </div>
